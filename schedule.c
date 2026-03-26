@@ -88,7 +88,7 @@ int ShortestBT(Process p[], int n, int current_time) {
 void srtf(Process p[], int n) {
     reset_processes(p, n);
 
-    int current_time = 0;
+    int current_time = p[0].at;   // FIX
     int completed = 0;
     float total_wt = 0;
 
@@ -99,9 +99,22 @@ void srtf(Process p[], int n) {
         int s_index = ShortestBT(p, n, current_time);
 
         if (s_index == -1) {
-            current_time++;
-            continue;
+    int next_arrival = INT_MAX;
+
+    for (int i = 0; i < n; i++) {
+        if (p[i].rt > 0 && p[i].at > current_time) {
+            if (p[i].at < next_arrival)
+                next_arrival = p[i].at;
         }
+    }
+
+    if (next_arrival != INT_MAX)
+        current_time = next_arrival;
+    else
+        break;  // safety
+
+    continue;
+}
 
         p[s_index].rt--;
         current_time++;
