@@ -43,3 +43,4 @@ int main(int argc, char *argv[]) {
     free(page_table);
     return 0;
 }
+//4 4 10000
